@@ -17,7 +17,7 @@ function succes
 end
 
 function run
-    if not binary/generate $(random) 1000 > "resource/input.txt"
+    if not binary/generate $(random) 1000000 0 1 > "resource/input.txt"
         failure
         return 1
     end
@@ -27,22 +27,12 @@ function run
         return 1
     end
 
-    if not binary/solve_2 < "resource/input.txt" > "resource/output_2.txt"
+    if not binary/solve_4 < "resource/input.txt" > "resource/output_4.txt"
         failure
         return 1
     end
 
-    if not binary/solve_3 < "resource/input.txt" > "resource/output_3.txt"
-        failure
-        return 1
-    end
-
-    if not diff "resource/output_1.txt" "resource/output_2.txt"
-        failure
-        return 1
-    end
-
-    if not diff "resource/output_2.txt" "resource/output_3.txt"
+    if not diff "resource/output_1.txt" "resource/output_4.txt"
         failure
         return 1
     end
