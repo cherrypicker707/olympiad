@@ -1,7 +1,10 @@
-// Solution for the Subproblem I
-// 20/100 points
+// Solution for the Subproblem I and II
+// 30/100 points
 
 #include <bits/stdc++.h>
+
+typedef bool bool_t;
+typedef std::vector<bool_t> vecbool_t;
 
 typedef char char_t;
 
@@ -16,6 +19,7 @@ int_t query_count;
 vecpaircharint_t query;
 
 void solve_1();
+void solve_2();
 
 int32_t main()
 {
@@ -29,8 +33,13 @@ int32_t main()
     for (int_t query_index = 0; query_index < query_count; query_index++)
         std::cin >> query[query_index].first >> query[query_index].second;
 
-    solve_1();
+    if (query_count <= 5000)
+    {
+        solve_1();
+        return 0;
+    }
 
+    solve_2();
     return 0;
 }
 
@@ -80,6 +89,49 @@ void solve_1()
             }
 
             vertex_count++;
+            continue;
+        }
+    }
+}
+
+void solve_2()
+{
+    int_t left_group_count = 1, right_group_count = 1;
+    vecbool_t group;
+
+    // We add an abstract, non-existent '0' vertex for practical purposes.
+    group.push_back(false);
+    group.push_back(false);
+    group.push_back(true);
+
+    for (int_t query_index = 0; query_index < query_count; query_index++)
+    {
+        char_t query_type = query[query_index].first;
+        int_t current_vertex = query[query_index].second;
+
+        if (query_type == '?')
+        {
+            if (group[current_vertex])
+            {
+                std::cout << left_group_count << '\n';
+                continue;
+            }
+
+            std::cout << right_group_count << '\n';
+            continue;
+        }
+
+        if (query_type == 'Z')
+        {
+            if (group[current_vertex])
+            {
+                group.push_back(true);
+                right_group_count++;
+                continue;
+            }
+
+            group.push_back(false);
+            left_group_count++;
             continue;
         }
     }

@@ -1,7 +1,10 @@
-// Solution for the Subproblem III
-// 35/100 points
+// Solution for the Subproblem I, II and III
+// 65/100 points
 
 #include <bits/stdc++.h>
+
+typedef bool bool_t;
+typedef std::vector<bool_t> vecbool_t;
 
 typedef char char_t;
 
@@ -19,6 +22,8 @@ int_t vertex_count = 0;
 vecint_t tree_parent, tree_depth;
 vecvecint_t tree_children;
 
+void solve_1();
+void solve_2();
 void solve_3();
 
 void set_children();
@@ -33,12 +38,127 @@ int32_t main()
 
     query.resize(query_count);
 
+    bool_t subproblem_1 = true, subproblem_2 = true;
+
+    if (query_count > 5000)
+        subproblem_1 = false;
+
     for (int_t query_index = 0; query_index < query_count; query_index++)
+    {
         std::cin >> query[query_index].first >> query[query_index].second;
 
-    solve_3();
+        if (query[query_index].first == 'W')
+            subproblem_2 = false;
+    }
 
+    if (subproblem_1)
+    {
+        solve_1();
+        return 0;
+    }
+
+    if (subproblem_2)
+    {
+        solve_2();
+        return 0;
+    }
+
+    solve_3();
     return 0;
+}
+
+void solve_1()
+{
+    int_t vertex_count;
+    vecvecint_t graph;
+
+    // We add an abstract, non-existent '0' vertex for practical purposes.
+    graph.push_back({});
+    graph.push_back({2});
+    graph.push_back({1});
+    vertex_count = 3;
+
+    for (int_t query_index = 0; query_index < query_count; query_index++)
+    {
+        char_t query_type = query[query_index].first;
+        int_t current_vertex = query[query_index].second;
+
+        if (query_type == '?')
+        {
+            std::cout << graph[current_vertex].size() << '\n';
+
+            continue;
+        }
+
+        if (query_type == 'W')
+        {
+            graph.push_back({});
+
+            graph[vertex_count].push_back(current_vertex);
+            graph[current_vertex].push_back(vertex_count);
+
+            vertex_count++;
+            continue;
+        }
+
+        if (query_type == 'Z')
+        {
+            graph.push_back({});
+
+            for (int_t neighbour_index = 0; neighbour_index < graph[current_vertex].size(); neighbour_index++)
+            {
+                int_t neigbour_vertex = graph[current_vertex][neighbour_index];
+                graph[vertex_count].push_back(neigbour_vertex);
+                graph[neigbour_vertex].push_back(vertex_count);
+            }
+
+            vertex_count++;
+            continue;
+        }
+    }
+}
+
+void solve_2()
+{
+    int_t left_group_count = 1, right_group_count = 1;
+    vecbool_t group;
+
+    // We add an abstract, non-existent '0' vertex for practical purposes.
+    group.push_back(false);
+    group.push_back(false);
+    group.push_back(true);
+
+    for (int_t query_index = 0; query_index < query_count; query_index++)
+    {
+        char_t query_type = query[query_index].first;
+        int_t current_vertex = query[query_index].second;
+
+        if (query_type == '?')
+        {
+            if (group[current_vertex])
+            {
+                std::cout << left_group_count << '\n';
+                continue;
+            }
+
+            std::cout << right_group_count << '\n';
+            continue;
+        }
+
+        if (query_type == 'Z')
+        {
+            if (group[current_vertex])
+            {
+                group.push_back(true);
+                right_group_count++;
+                continue;
+            }
+
+            group.push_back(false);
+            left_group_count++;
+            continue;
+        }
+    }
 }
 
 void solve_3()
