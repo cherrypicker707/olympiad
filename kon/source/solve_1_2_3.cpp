@@ -20,7 +20,7 @@ vecpaircharint_t query;
 
 int_t vertex_count = 0;
 vecint_t tree_parent, tree_depth;
-vecvecint_t tree_children;
+vecvecint_t tree_child;
 
 void solve_1();
 void solve_2();
@@ -221,7 +221,7 @@ void solve_3()
         }
     }
 
-    tree_children.resize(vertex_count);
+    tree_child.resize(vertex_count);
     set_children();
 
     tree_depth.resize(vertex_count);
@@ -244,14 +244,14 @@ void set_children()
     int_t vertex_count = tree_parent.size();
 
     for (int_t vertex_index = 1; vertex_index < vertex_count; vertex_index++)
-        tree_children[tree_parent[vertex_index]].push_back(vertex_index);
+        tree_child[tree_parent[vertex_index]].push_back(vertex_index);
 }
 
 void set_depth(int_t vertex, int_t depth, int_t parent)
 {
     tree_depth[vertex] = depth;
 
-    for (int_t child : tree_children[vertex])
+    for (int_t child : tree_child[vertex])
     {
         if (child == parent)
             continue;
