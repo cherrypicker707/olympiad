@@ -1,3 +1,5 @@
+// Random Test Data Generator
+
 #include <bits/stdc++.h>
 
 typedef bool bool_t;
@@ -11,7 +13,7 @@ std::mt19937_64 mersenne_twister;
 
 int_t get_random_number(int_t minimum, int_t maximum);
 int_t get_random_element(setint_t &set);
-void print_random_tree(int_t vertex_count);
+void print_random_tree(int_t city_count);
 
 int32_t main(int32_t argument_count, char_t **argument)
 {
@@ -20,22 +22,22 @@ int32_t main(int32_t argument_count, char_t **argument)
 
     assert(argument_count == 4);
     const int_t seed = atoi(argument[1]);
-    const int_t vertex_count = atoi(argument[2]);
-    const int_t initial_vertex_count = atoi(argument[3]);
-    setint_t initial_vertices;
+    const int_t city_count = atoi(argument[2]);
+    const int_t agent_count = atoi(argument[3]);
+    setint_t agents;
 
     mersenne_twister.seed(seed);
 
-    std::cout << vertex_count << ' ' << initial_vertex_count << '\n';
+    std::cout << city_count << ' ' << agent_count << '\n';
 
-    while (initial_vertices.size() != initial_vertex_count)
-        initial_vertices.insert(get_random_number(1, vertex_count));
+    while (agents.size() != agent_count)
+        agents.insert(get_random_number(1, city_count));
 
-    for (int_t initial_vertex : initial_vertices)
-        std::cout << initial_vertex << ' ';
+    for (int_t agent : agents)
+        std::cout << agent << ' ';
     std::cout << '\n';
 
-    print_random_tree(vertex_count);
+    print_random_tree(city_count);
 }
 
 int_t get_random_number(int_t minimum, int_t maximum)
@@ -50,12 +52,12 @@ int_t get_random_element(setint_t &set)
     return *iterator;
 }
 
-void print_random_tree(int_t vertex_count)
+void print_random_tree(int_t city_count)
 {
-    int_t root = get_random_number(1, vertex_count);
+    int_t root = get_random_number(1, city_count);
     setint_t used_vertices, unused_vertices;
 
-    for (int_t index = 1; index <= vertex_count; index++)
+    for (int_t index = 1; index <= city_count; index++)
         unused_vertices.insert(index);
 
     used_vertices.insert(root);
@@ -63,19 +65,19 @@ void print_random_tree(int_t vertex_count)
 
     while (!unused_vertices.empty())
     {
-        int_t random_used_vertex = get_random_element(used_vertices);
-        int_t random_unused_vertex = get_random_element(unused_vertices);
+        int_t random_used_city = get_random_element(used_vertices);
+        int_t random_unused_city = get_random_element(unused_vertices);
 
-        used_vertices.insert(random_unused_vertex);
-        unused_vertices.erase(random_unused_vertex);
+        used_vertices.insert(random_unused_city);
+        unused_vertices.erase(random_unused_city);
 
         bool_t used_first = get_random_number(0, 1);
         if (used_first)
         {
-            std::cout << random_used_vertex << ' ' << random_unused_vertex << '\n';
+            std::cout << random_used_city << ' ' << random_unused_city << '\n';
             continue;
         }
 
-        std::cout << random_unused_vertex << ' ' << random_used_vertex << '\n';
+        std::cout << random_unused_city << ' ' << random_used_city << '\n';
     }
 }
