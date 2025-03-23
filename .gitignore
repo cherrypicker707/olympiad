@@ -1,3 +1,5 @@
-*/resource/
-*/binary/
-*/test.fish
+**/resource/
+**/res/
+
+**/binary/
+**/bin/
