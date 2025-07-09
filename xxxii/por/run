@@ -1,0 +1,17 @@
+#! /bin/zsh
+
+n=6
+m=100
+
+f()
+{
+	mkfifo res/input.txt res/output.txt
+	bin/program $n $m > res/input.txt < res/output.txt &
+	bin/solve < res/input.txt > res/output.txt
+	rm -fr res/input.txt res/output.txt
+}
+
+while f
+do
+	true
+done
