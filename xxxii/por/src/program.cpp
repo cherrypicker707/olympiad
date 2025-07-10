@@ -1,3 +1,5 @@
+// Program Used For Testing
+
 #include <bits/stdc++.h>
 
 typedef long long ll;
@@ -22,12 +24,6 @@ int main(int argc, char **argv)
 	for(ll i = 0; i < n; i++)
 		permutation[i] = i;
 	std::shuffle(permutation.begin(), permutation.end(), mersenne_twister);
-	// permutation = {1, 0, 2, 3, 4, 5};
-
-	// std::cerr << "Actual array: ";
-	// for(ll i = 0; i < n; i++)
-	// 	std::cerr << (permutation[i] + 1) << ' ';
-	// std::cerr << '\n';
 
 	std::cout << n << '\n';
 
@@ -35,7 +31,6 @@ int main(int argc, char **argv)
 	{
 		ll x, y;
 		std::cin >> x >> y;
-		// std::cerr << x << ' ' << y << std::endl;
 		x--;
 		y--;
 

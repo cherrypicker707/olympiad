@@ -1,5 +1,7 @@
 #! /bin/zsh
 
+# Script Used for Testing.
+
 n=6
 m=100
 

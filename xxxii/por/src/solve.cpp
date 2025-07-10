@@ -1,3 +1,6 @@
+// Solution for All Subproblems
+// 100/100 points
+
 #include <bits/stdc++.h>
 
 typedef long long ll;
@@ -25,10 +28,6 @@ int main()
 		list.push_back(i);
 	}
 
-	// for(ll e : list)
-	// 	std::cerr << e << ' ';
-	// std::cerr << std::endl;
-
 	vll array(n);
 	for(ll i = n - 1; i >= 1; i--)
 	{
@@ -52,20 +51,9 @@ int main()
 		array[i] = *iterator;
 		std::swap(array[0], array[i]);
 
-		// std::cerr << *previousIterator << " -(" << difference << ")-> " << *iterator << std::endl;
 		list.erase(previousIterator);
 		previousIterator = iterator;
 	}
-
-	// auto leftCandidate = previousIterator;
-	// auto rightCandidate = previousIterator;
-	// leftCandidate--;
-	// rightCandidate--;
-
-	// std::cerr << "Unprocessed array: ";
-	// for(ll i = 0; i < n; i++)
-	// 	std::cerr << array[i] << ' ';
-	// std::cerr << std::endl;
 
 	ll offset = 0;
 	for(ll i = 0; i < n; i++)
@@ -74,24 +62,13 @@ int main()
 	for(ll i = 0; i < n; i++)
 		array[i] -= offset;
 
-	// std::cerr << "Decoded array: ";
-	// for(ll i = 0; i < n; i++)
-	// 	std::cerr << (array[i] + 1) << ' ';
-	// std::cerr << std::endl;
-
 	vll location(n, 0);
 	for(ll i = 0; i < n; i++)
 		location[array[i]] = i;
 
-	// std::cerr << "Locations: ";
-	// for(ll i = 0; i < n; i++)
-	// 	std::cerr << (location[i] + 1) << ' ';
-	// std::cerr << std::endl;
-
 	for(ll i = 0; i < n; i++)
 	{
 		std::cout << (i + 1) << ' ' << (location[i] + 1) << std::endl;
-		// std::cerr << (i + 1) << ' ' << (location[i] + 1) << std::endl;
 
 		ll leftIndex = i;
 		ll rightIndex = location[i];

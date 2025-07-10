@@ -1,3 +1,6 @@
+// Solution for the Subproblems I and II
+// 14/100 points
+
 #include <bits/stdc++.h>
 
 typedef long long ll;
